@@ -1,6 +1,10 @@
 CONFIG_MODULE_SIG=n
 
+# 交叉編譯(Cross compile)
 BASEINCLUDE ?= /lib/modules/`uname -r`/build
+
+# 本地編譯
+# BASEINCLUDE ?= /usr/src/linux
 
 hello-world-objs := hello_world.o 
 
