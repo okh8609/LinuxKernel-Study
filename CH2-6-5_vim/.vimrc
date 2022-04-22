@@ -184,8 +184,8 @@ nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 "F5 查找c符号； F6 查找字符串；   F7 查找函数定义； F8 查找函数谁调用了，
 nmap <silent> <F5> :cs find s <C-R>=expand("<cword>")<CR><CR> :botright copen<CR><CR> 
 nmap <silent> <F6> :cs find t <C-R>=expand("<cword>")<CR><CR> :botright copen<CR><CR>
-"nmap <silent> <F7> :cs find g <C-R>=expand("<cword>")<CR><CR> 
 nmap <silent> <F7> :cs find c <C-R>=expand("<cword>")<CR><CR> :botright copen<CR><CR>
+nmap <silent> <F12> :cs find g <C-R>=expand("<cword>")<CR><CR> 
 
 
  "--------------------------------------------------------------------------------
