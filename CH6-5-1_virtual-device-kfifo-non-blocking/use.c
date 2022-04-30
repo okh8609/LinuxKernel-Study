@@ -10,7 +10,7 @@ int main()
 {
 	int ret;
 
-	char message[80] = "Testing the virtual FIFO device";
+	char message[14] = "Testing FIFO.";
 	size_t message_len = sizeof(message);
 
 	char *read_buffer;

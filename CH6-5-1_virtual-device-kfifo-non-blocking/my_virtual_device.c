@@ -15,7 +15,7 @@
 static struct device *my_device;
 
 /*virtual FIFO device's buffer*/
-#define MAX_KFIFO_SIZE 128
+#define MAX_KFIFO_SIZE 16
 static struct kfifo test;
 
 /* lock for procfs read access */
@@ -67,19 +67,21 @@ static ssize_t drv_write(struct file *file, const char __user *buf, size_t count
     int ret;
     unsigned int copied;
 
-    int kfifo_free_space = kfifo_size(&test) - kfifo_len(&test);
-    // count = kfifo_free_space > count ? count : kfifo_free_space;
-    if (kfifo_free_space < count)
-    {
+    // int kfifo_free_space = kfifo_size(&test) - kfifo_len(&test);
+    // if (kfifo_free_space < count)
+    // {
+    //     if (file->f_flags & O_NONBLOCK)
+    //     {
+    //         return -EAGAIN;
+    //     }
+    //     else
+    //     {
+    //         return -ENOMEM; /* Out of memory */
+    //     }
+    // }
+    if (kfifo_is_full(&test))
         if (file->f_flags & O_NONBLOCK)
-        {
             return -EAGAIN;
-        }
-        else
-        {
-            return -ENOMEM; /* Out of memory */
-        }
-    }
 
     if (mutex_lock_interruptible(&write_lock))
         return -ERESTARTSYS;
