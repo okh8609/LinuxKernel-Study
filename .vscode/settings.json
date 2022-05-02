@@ -2,6 +2,11 @@
     // "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
         "module.h": "c",
-        "kfifo.h": "c"
+        "kfifo.h": "c",
+        "algorithm": "c",
+        "sched.h": "c",
+        "miscdevice.h": "c",
+        "device.h": "c",
+        "fs.h": "c"
     }
 }
