@@ -8,6 +8,10 @@
         "miscdevice.h": "c",
         "device.h": "c",
         "fs.h": "c",
-        "mutex.h": "c"
+        "mutex.h": "c",
+        "atomic": "c",
+        "*.tcc": "c",
+        "fstream": "c",
+        "sstream": "c"
     }
 }
