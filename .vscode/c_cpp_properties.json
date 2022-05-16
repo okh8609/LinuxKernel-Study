@@ -8,6 +8,10 @@
                 "/lib/modules/5.17.2/build/include/linux/**",
                 "/lib/modules/5.17.2/build/arch/arm64/include/**",
                 "/lib/modules/5.17.2/build/arch/x86/include/**"
+                // "/lib/modules/5.4.0-1059-raspi/build/include/**",
+                // "/lib/modules/5.4.0-1059-raspi/build/include/linux/**",
+                // "/lib/modules/5.4.0-1059-raspi/build/arch/arm64/include/**",
+                // "/lib/modules/5.4.0-1059-raspi/build/arch/x86/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
