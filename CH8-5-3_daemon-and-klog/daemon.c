@@ -84,6 +84,7 @@ int check_kernel_log()
 		goto done;
 	}
 	buffer[size] = '\0';
+	printf("kernel log read size: %d\n", size);
 
 	// 篩選並儲存資料
 	if (strstr(buffer, OOPS_LOG)) // check if oops in klog
