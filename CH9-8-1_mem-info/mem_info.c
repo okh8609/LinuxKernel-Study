@@ -3,11 +3,16 @@
 #include <linux/init.h>
 #include <linux/mm.h>
 
-#ifndef ARCH_PFN_OFFSET
-#define ARCH_PFN_OFFSET 0 // x86 ????????????
-#endif
-
 #define NULL ((void *)0)
+
+// return first "page frame number"
+unsigned long get_first_pfn(void)
+{
+    unsigned long i = 0;
+    while (!pfn_valid(i++))
+        ;
+    return i - 1;
+}
 
 #define PRINT_INFO(key, value)         \
     pr_info("%-15s=%10d %10ld %8ld\n", \
@@ -15,22 +20,16 @@
 
 static int __init my_init(void)
 {
-    unsigned long num_physpages;
     //獲取系統所有記憶體的大小，返回實體記憶體的頁面數量。
-    num_physpages = get_num_physpages();
+    unsigned long num_physpages = get_num_physpages();
     pr_info("Examining %ld pages (num_phys_pages) = %ld MB. (page size = %ld)\n",
             num_physpages, num_physpages * PAGE_SIZE / 1024 / 1024, PAGE_SIZE);
-    num_physpages += 819200; // x86 ??????????????
 
     struct page *pg = NULL;
-
-    unsigned long i = 0, pfn = 0, valid = 0;
+    unsigned long pfn = 0, valid = 0;
     int free = 0, locked = 0, reserved = 0, swapcache = 0, referenced = 0, slab = 0, priv = 0, uptodate = 0, dirty = 0, active = 0, writeback = 0, mappedtodisk = 0;
-    pr_info("ARCH_PFN_OFFSET = %d", ARCH_PFN_OFFSET);
-    for (i = 0; i < num_physpages; i++)
+    for (pfn = get_first_pfn(); valid < num_physpages; ++pfn)
     {
-        /* Most of ARM systems have ARCH_PFN_OFFSET */
-        pfn = i + ARCH_PFN_OFFSET;
         /* may be holes due to remapping */
         if (!pfn_valid(pfn)) // 檢查頁幁號pfn是否有效。
             continue;
@@ -40,7 +39,6 @@ static int __init my_init(void)
         if (pg == NULL)
             continue;
 
-        /* page_count(page) == 0 is a free page. */
         if (page_count(pg) == 0) // 引用計數，表示內核中引用該page的次數。等於0的話，說明這個頁面是空閒頁面。
         {
             ++free;
