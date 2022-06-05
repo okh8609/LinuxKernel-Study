@@ -6,6 +6,11 @@
 static int obj_size = 19;
 static struct kmem_cache *m_slab;
 static char *m_buf;
+static void m_buf_constructor(void *addr)
+{
+	// 沒有指定constructor的slab，會試著與其他slab合併
+    memset(addr, 0, obj_size);
+}
 
 static int __init my_init(void)
 {
@@ -17,13 +22,13 @@ static int __init my_init(void)
     }
 
     /* create a slab identifier */
-    m_slab = kmem_cache_create("my_cache", obj_size, 0, SLAB_HWCACHE_ALIGN, NULL);
+    m_slab = kmem_cache_create("my_cache", obj_size, 0, SLAB_HWCACHE_ALIGN, m_buf_constructor);
     if (!m_slab)
     {
         pr_err("kmem_cache_create failed\n");
         return -ENOMEM;
     }
-    pr_info("create mycache correctly\n");
+    pr_info("create my_cache correctly\n");
 
     /* allocate a memory cache object */
     m_buf = kmem_cache_alloc(m_slab, GFP_ATOMIC);
@@ -46,7 +51,7 @@ static void __exit my_exit(void)
 
     /* destroy the slab identifier */
     kmem_cache_destroy(m_slab);
-    pr_info("destroyed mycache\n");
+    pr_info("destroyed my_cache\n");
 }
 
 module_init(my_init);
