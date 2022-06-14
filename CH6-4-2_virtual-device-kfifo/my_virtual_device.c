@@ -15,7 +15,7 @@
 static struct device *my_device;
 
 /*virtual FIFO device's buffer*/
-#define MAX_KFIFO_SIZE 16
+#define MAX_KFIFO_SIZE 16 // 必須是2的冪次方
 static struct kfifo test;
 
 /* lock for procfs read access */
