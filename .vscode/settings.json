@@ -30,6 +30,7 @@
         "compat.h": "c",
         "slab.h": "c",
         "random": "c",
-        "numeric": "c"
+        "numeric": "c",
+        "freezer.h": "c"
     }
 }
